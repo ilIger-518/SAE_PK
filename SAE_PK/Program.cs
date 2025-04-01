@@ -5,7 +5,8 @@ class Program
 {
     public static void Main(string[] args)
     {
-       Console.WriteLine("");
+       Console.WriteLine("Dieses Programm wertet die log Datei eines Servers aus verarbeitet die relevanten Daten.");
+       Console.WriteLine("----------------------------------------------------------------------------------------");
     }
 
     public static void DatenSpeichern()
