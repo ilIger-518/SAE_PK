@@ -14,16 +14,24 @@ class Program
         
     }
 
-    public static void DatenLesen()
+    public static List<string> DatenLesen()
     {
         List<string> runningBehind = new();
-        StreamReader sr = new StreamReader("C:\\Users\\{Username}\\Desktop\\serverLog.log");
-        
-        
+        string filePath = ("/Users/m.switon/Desktop/testLog.txt");
+        using (StreamReader sr = new StreamReader(filePath))
+        {
+            string line;
+            while ((line = sr.ReadLine()) != null) 
+            {
+                runningBehind.Add(line);
+            }
+        }
+
+        return runningBehind;
     }
 
     public static void DatenVerarbeiten()
     {
-        
+        List<string> logs = DatenLesen();
     }
 }
