@@ -5,7 +5,7 @@ class Program
 {
     public static void Main(string[] args)
     {
-       Console.WriteLine("jzfu");
+       Console.WriteLine("");
     }
 
     public static void DatenSpeichern()
