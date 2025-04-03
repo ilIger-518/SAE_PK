@@ -21,7 +21,7 @@ class Program
         
     }
 
-    public static List<string> DatenLesen()
+    public static List<string> DatenLesen() //Done
     {
         List<string> runningBehind = new();
         string filePath = ("/Users/m.switon/Desktop/testLog.txt");
@@ -37,7 +37,7 @@ class Program
         return runningBehind;
     }
 
-    public static (List<int>, List<int>) DatenVerarbeiten(List<string> logs)
+    public static (List<int>, List<int>) DatenVerarbeiten(List<string> logs) //Done
     {
         int msTimeWoMs = 0;
         string msTimeWMs = "";
