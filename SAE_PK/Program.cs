@@ -2,7 +2,7 @@
 
 namespace SAE_PK;
 using System.IO;
-
+// Minecraft server log schema: INFO]:
 class Program
 {
     public static void Main(string[] args)
@@ -11,9 +11,10 @@ class Program
        List<int> ticksBehind = new();
        Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
        Console.WriteLine("----------------------------------------------------------------------------------------");
-       (msBehind, ticksBehind) = DatenVerarbeiten(DatenLesen());
+       (msBehind, ticksBehind) = VerzögerungenAuslesen(DatenLesen());
        Console.WriteLine($"{msBehind[2]}" +" "+ $"{ticksBehind[3]}"); //temp
        // msBehind und ticksBehind sind die beiden Lists wo schon alles abgespeichert wurde
+       Console.ReadKey();
     }
 
     public static void DatenSpeichern()
@@ -36,10 +37,28 @@ class Program
         {
             logs.Add(line);
         }
-        return logs;
+
+        if (!logs.Contains("INFO]:")) //Not working yet
+        {
+            Console.WriteLine("Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N(Press any button)]: ");
+            if (Console.ReadLine() == "j" || Console.ReadLine() == "J")
+            {
+                return logs;
+            }
+            else
+            {
+                Console.WriteLine("Programm frühzeitig vom user beendet da log Datei inkorrekt war");
+                Environment.Exit(1);
+                return logs; //Otherwise method won't work
+            }
+        }
+        else
+        {
+            return logs;
+        }
     }
 
-    public static (List<int>, List<int>) DatenVerarbeiten(List<string> logs) //Done
+    public static (List<int>, List<int>) VerzögerungenAuslesen(List<string> logs) //Done
     {
         int msTimeWoMs = 0;
         string msTimeWMs = "";
