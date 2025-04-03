@@ -9,7 +9,7 @@ class Program
     {
        List<int> msBehind = new();
        List<int> ticksBehind = new();
-       Console.WriteLine("Dieses Programm wertet die log Datei eines Servers aus und, speichert die verarbeiteten Daten ab.");
+       Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
        Console.WriteLine("----------------------------------------------------------------------------------------");
        (msBehind, ticksBehind) = DatenVerarbeiten(DatenLesen());
        Console.WriteLine($"{msBehind[2]}" +" "+ $"{ticksBehind[3]}"); //temp
@@ -21,19 +21,21 @@ class Program
         
     }
 
-    public static List<string> DatenLesen() //Done
+    public static List<string> DatenLesen()
     {
-        List<string> logs = new();
-        string filePath = ("/Users/m.switon/Desktop/testLog.txt");
-        using (StreamReader sr = new StreamReader(filePath))
+        Console.WriteLine("Bitte gebe den Dateipfad der Logdatei an: ");
+        string filePath = Console.ReadLine();
+        if (!File.Exists(filePath))
         {
-            string line;
-            while ((line = sr.ReadLine()) != null) 
-            {
-                logs.Add(line);
-            }
+            throw new FileNotFoundException($"Die Datei '{filePath}' wurde nicht gefunden");
         }
-
+        List<string> logs = new();
+        using StreamReader sr = new(filePath);
+        string line;
+        while ((line = sr.ReadLine()) != null)
+        {
+            logs.Add(line);
+        }
         return logs;
     }
 
