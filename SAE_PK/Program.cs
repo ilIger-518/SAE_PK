@@ -23,18 +23,18 @@ class Program
 
     public static List<string> DatenLesen() //Done
     {
-        List<string> runningBehind = new();
+        List<string> logs = new();
         string filePath = ("/Users/m.switon/Desktop/testLog.txt");
         using (StreamReader sr = new StreamReader(filePath))
         {
             string line;
             while ((line = sr.ReadLine()) != null) 
             {
-                runningBehind.Add(line);
+                logs.Add(line);
             }
         }
 
-        return runningBehind;
+        return logs;
     }
 
     public static (List<int>, List<int>) DatenVerarbeiten(List<string> logs) //Done
