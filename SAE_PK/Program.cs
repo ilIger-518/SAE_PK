@@ -1,4 +1,6 @@
-﻿namespace SAE_PK;
+﻿using System.Numerics;
+
+namespace SAE_PK;
 using System.IO;
 
 class Program
@@ -7,6 +9,7 @@ class Program
     {
        Console.WriteLine("Dieses Programm wertet die log Datei eines Servers aus verarbeitet die relevanten Daten.");
        Console.WriteLine("----------------------------------------------------------------------------------------");
+       DatenVerarbeiten(DatenLesen());
     }
 
     public static void DatenSpeichern()
@@ -30,8 +33,20 @@ class Program
         return runningBehind;
     }
 
-    public static void DatenVerarbeiten()
+    public static List<string> DatenVerarbeiten(List<string> logs)
     {
-        List<string> logs = DatenLesen();
+        List<string> serveroverloadLog = new();
+        int logCounter = 0;
+        while (logCounter < logs.Count)
+        {
+            if (logs[logCounter].Contains("Is the server overloaded?"))
+            {
+                serveroverloadLog.Add(logs[logCounter]);
+            }
+            logCounter++;
+        }
+        
+        
+        return;
     }
 }
