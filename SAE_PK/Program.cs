@@ -13,6 +13,7 @@ class Program
        Console.WriteLine("----------------------------------------------------------------------------------------");
        (msBehind, ticksBehind) = DatenVerarbeiten(DatenLesen());
        Console.WriteLine($"{msBehind[2]}" +" "+ $"{ticksBehind[3]}"); //temp
+       // msBehind und ticksBehind sind die beiden Lists wo schon alles abgespeichert wurde
     }
 
     public static void DatenSpeichern()
