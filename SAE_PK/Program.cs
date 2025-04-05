@@ -2,7 +2,7 @@
 
 namespace SAE_PK;
 using System.IO;
-// Minecraft server log schema: INFO]:
+
 class Program
 {
     public static void Main(string[] args)
@@ -12,7 +12,7 @@ class Program
        Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
        Console.WriteLine("----------------------------------------------------------------------------------------");
        (msBehind, ticksBehind) = VerzögerungenAuslesen(DatenLesen());
-       Console.WriteLine($"{msBehind[2]}" +" "+ $"{ticksBehind[3]}"); //temp
+       Console.WriteLine($"{msBehind[0]}" +" "+ $"{ticksBehind[0]}"); //temp
        // msBehind und ticksBehind sind die beiden Lists wo schon alles abgespeichert wurde
        Console.ReadKey();
     }
@@ -38,7 +38,7 @@ class Program
             logs.Add(line);
         }
 
-        if (!logs.Contains("INFO]:")) //Not working yet
+        if (!logs[9].Contains("INFO]:") && !logs[9].Contains("WARN]:")) //Not working yet
         {
             Console.WriteLine("Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N(Press any button)]: ");
             if (Console.ReadLine() == "j" || Console.ReadLine() == "J")
@@ -86,5 +86,33 @@ class Program
             serveroverloadTimeTicks.Add(int.Parse(splittedServeroverloadTime[12]));
         }
         return (serveroverloadTimeInMs, serveroverloadTimeTicks);
+    }
+
+    public static (int[], int[]) KeineAhnungDigga(List<int> msBehind, List<int> ticksBehind)
+    {
+        msBehind.Sort();
+        ticksBehind.Sort();
+        int highestTick = ticksBehind[ticksBehind.Count - 1];
+        int lowestTick = ticksBehind[0];
+        int highestMs = msBehind[msBehind.Count - 1];
+        int lowestMs = msBehind[0];
+        int tickSum = 0;
+        int msSum = 0;
+        int msAverage = 0;
+        int tickAverage = 0;
+
+        for (int i = 0; i < ticksBehind.Count; i++)
+        {
+            tickSum += ticksBehind[i];
+        }
+
+        for (int i = 0; i < msBehind.Count; i++)
+        {
+            msSum += msBehind[i];
+        }
+        
+        msAverage = msSum / msBehind.Count;
+        tickAverage = tickSum / ticksBehind.Count;
+        return;
     }
 }
