@@ -9,16 +9,55 @@ class Program
     {
        List<int> msBehind = new();
        List<int> ticksBehind = new();
-       Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
+       Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers💀 aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
        Console.WriteLine("----------------------------------------------------------------------------------------");
        (msBehind, ticksBehind) = VerzögerungenAuslesen(DatenLesen());
        Console.WriteLine($"{msBehind[0]}" +" "+ $"{ticksBehind[0]}"); //temp
-       // msBehind und ticksBehind sind die beiden Lists wo schon alles abgespeichert wurde
+       int[] tempParameter = KeineAhnungDigga(msBehind, ticksBehind);
+       DatenSpeichern(tempParameter);
        Console.ReadKey();
     }
 
-    public static void DatenSpeichern()
+    public static void DatenSpeichern(int[] everyLatency)
     {
+        // everyLatency = highestTick, lowestTick, highestMs, lowestMs, tickSum, msSum, msAverage, tickAverage 
+        string desktopPath = (Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "serverLatencies.txt");
+        int userInput;
+        while (true)
+        {
+            Console.WriteLine("Wo möchtest du die Datei abspeichern?\nBenutzerdefiniert [1]\nDesktop [2]");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out userInput) && (userInput == 1 || userInput == 2 ))
+            {
+                break;
+            }
+
+            Console.WriteLine("Ungültige Eingabe. Bitte gib 1 oder 2 ein");
+        }
+
+        string outputPath;
+            
+        if (userInput == 1)
+        {
+            Console.Write("Speicherpfad der Datei: ");
+            outputPath = Convert.ToString(Console.ReadLine());
+        }
+        else
+        {
+            outputPath = desktopPath;
+        }
+
+
+        StreamWriter sw = new StreamWriter(outputPath);  //Not working
+        
+        sw.WriteLine("Höchste verzögerung in ticks: " + everyLatency[0]); 
+        sw.WriteLine("Niedrigste verzögerung in ticks: " + everyLatency[1]); 
+        sw.WriteLine("Höchste verzögerung in Millisekunden: " + everyLatency[2]); 
+        sw.WriteLine("Niedrigste verzögerung in Millisekunden: " + everyLatency[3]); 
+        sw.WriteLine("Gesamtanzahl an verzögerungen in ticks: " + everyLatency[4]); 
+        sw.WriteLine("Gesamtanzahl an verzögerung in Millisekunden: " + everyLatency[5]); 
+        sw.WriteLine("Durchschnittliche verzögerung in Millisekunden: " + everyLatency[6]); 
+        sw.WriteLine("Durchschnittliche verzögerung in ticks: " + everyLatency[7]);
         
     }
 
@@ -38,7 +77,7 @@ class Program
             logs.Add(line);
         }
 
-        if (!logs[9].Contains("INFO]:") && !logs[9].Contains("WARN]:")) //Not working yet
+        if (!logs[9].Contains("INFO]:") && !logs[9].Contains("WARN]:")) 
         {
             Console.WriteLine("Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N(Press any button)]: ");
             if (Console.ReadLine() == "j" || Console.ReadLine() == "J")
@@ -88,7 +127,7 @@ class Program
         return (serveroverloadTimeInMs, serveroverloadTimeTicks);
     }
 
-    public static (int[], int[]) KeineAhnungDigga(List<int> msBehind, List<int> ticksBehind)
+    public static int[] KeineAhnungDigga(List<int> msBehind, List<int> ticksBehind)
     {
         msBehind.Sort();
         ticksBehind.Sort();
@@ -100,6 +139,7 @@ class Program
         int msSum = 0;
         int msAverage = 0;
         int tickAverage = 0;
+        int[] everyLatency;
 
         for (int i = 0; i < ticksBehind.Count; i++)
         {
@@ -113,6 +153,9 @@ class Program
         
         msAverage = msSum / msBehind.Count;
         tickAverage = tickSum / ticksBehind.Count;
-        return;
+
+        everyLatency = new int[8]
+            { highestTick, lowestTick, highestMs, lowestMs, tickSum, msSum, msAverage, tickAverage };
+        return(everyLatency);
     }
 }
