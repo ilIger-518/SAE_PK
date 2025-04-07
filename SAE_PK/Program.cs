@@ -21,7 +21,7 @@ class Program
     public static void DatenSpeichern(int[] everyLatency)
     {
         // everyLatency = highestTick, lowestTick, highestMs, lowestMs, tickSum, msSum, msAverage, tickAverage 
-        string desktopPath = (Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "serverLatencies.txt");
+        string desktopPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "serverLatencies.txt");
         int userInput;
         while (true)
         {
@@ -48,17 +48,19 @@ class Program
         }
 
 
-        StreamWriter sw = new StreamWriter(outputPath);  //Not working
-        
-        sw.WriteLine("Höchste verzögerung in ticks: " + everyLatency[0]); 
-        sw.WriteLine("Niedrigste verzögerung in ticks: " + everyLatency[1]); 
-        sw.WriteLine("Höchste verzögerung in Millisekunden: " + everyLatency[2]); 
-        sw.WriteLine("Niedrigste verzögerung in Millisekunden: " + everyLatency[3]); 
-        sw.WriteLine("Gesamtanzahl an verzögerungen in ticks: " + everyLatency[4]); 
-        sw.WriteLine("Gesamtanzahl an verzögerung in Millisekunden: " + everyLatency[5]); 
-        sw.WriteLine("Durchschnittliche verzögerung in Millisekunden: " + everyLatency[6]); 
-        sw.WriteLine("Durchschnittliche verzögerung in ticks: " + everyLatency[7]);
-        
+        using (StreamWriter sw = new StreamWriter(outputPath)) // geht 
+        {
+
+
+            sw.WriteLine("Höchste verzögerung in ticks: " + everyLatency[0]);
+            sw.WriteLine("Niedrigste verzögerung in ticks: " + everyLatency[1]);
+            sw.WriteLine("Höchste verzögerung in Millisekunden: " + everyLatency[2]);
+            sw.WriteLine("Niedrigste verzögerung in Millisekunden: " + everyLatency[3]);
+            sw.WriteLine("Gesamtanzahl an verzögerungen in ticks: " + everyLatency[4]);
+            sw.WriteLine("Gesamtanzahl an verzögerung in Millisekunden: " + everyLatency[5]);
+            sw.WriteLine("Durchschnittliche verzögerung in Millisekunden: " + everyLatency[6]);
+            sw.WriteLine("Durchschnittliche verzögerung in ticks: " + everyLatency[7]);
+        }
     }
 
     public static List<string> DatenLesen()
@@ -127,7 +129,7 @@ class Program
         return (serveroverloadTimeInMs, serveroverloadTimeTicks);
     }
 
-    public static int[] KeineAhnungDigga(List<int> msBehind, List<int> ticksBehind)
+    public static int[] KeineAhnungDigga(List<int> msBehind, List<int> ticksBehind)  //method namen ändern
     {
         msBehind.Sort();
         ticksBehind.Sort();
