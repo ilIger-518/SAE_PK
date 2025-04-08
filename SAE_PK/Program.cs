@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Microsoft.VisualBasic;
 
 namespace SAE_PK;
 using System.IO;
@@ -7,20 +8,21 @@ class Program
 {
     public static void Main(string[] args)
     {
-       List<int> msBehind = new();
-       List<int> ticksBehind = new();
-       Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
-       Console.WriteLine("----------------------------------------------------------------------------------------");
-       (msBehind, ticksBehind) = VerzögerungenAuslesen(DatenLesen());
-       int[] tempParameter = VerzögerungenVerarbeiten(msBehind, ticksBehind);
-       DatenSpeichern(tempParameter);
-       Console.ReadKey();
+        List<int> msBehind = new();
+        List<int> ticksBehind = new();
+        Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
+        Console.WriteLine("----------------------------------------------------------------------------------------");
+        (msBehind, ticksBehind) = VerzögerungenAuslesen(DatenLesen());
+        int[] tempParameter = VerzögerungenVerarbeiten(msBehind, ticksBehind);
+        DatenSpeichern(tempParameter);
+        Console.ReadKey();
     }
 
     public static void DatenSpeichern(int[] everyLatency)
     {
+        string dateAndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         // everyLatency = highestTick, lowestTick, highestMs, lowestMs, tickSum, msSum, msAverage, tickAverage 
-        string desktopPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "serverLatencies.txt");
+        string desktopPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{dateAndTime} serverLatencies.txt");
         int userInput;
         while (true)
         {
@@ -40,34 +42,11 @@ class Program
         {
             Console.Write("Speicherpfad der Datei: ");
             outputPath = Convert.ToString(Console.ReadLine());
+            outputPath = Path.Combine(outputPath, $"{dateAndTime} serverLatencies.txt");
         }
         else
         {
             outputPath = desktopPath;
-        }
-
-        if (File.Exists(outputPath))
-        {
-            int input2;
-            Console.WriteLine("Die Datei existiert bereits.\nSoll die Datei ersetzt werden oder eine Kopie erstelt werden?\nKopie [1]\nErsetzen [2]");
-            while (true)
-            {
-                input2 = Convert.ToInt32(Console.ReadLine());
-
-                if (input2 == 1 || input2 == 2)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Falsche Eingabe.....\nKopie [1]\nErsetzen [2]");
-                }
-            }
-
-            if (input2 == 1)
-            {
-                outputPath = Path.Combine(outputPath, "(1)"); //anders machen
-            }
         }
 		
 
