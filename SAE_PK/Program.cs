@@ -61,6 +61,15 @@ class Program
             sw.WriteLine("Durchschnittliche verzögerung in Millisekunden: " + everyLatency[6]);
             sw.WriteLine("Durchschnittliche verzögerung in ticks: " + everyLatency[7]);
         }
+
+        if (File.Exists(outputPath))
+        {
+            Console.WriteLine("Die Datei wurde erfolgreich erstellt.");
+        }
+        else
+        {
+            Console.WriteLine("Ein Fehler ist aufgetreten.");
+        }
     }
 
     public static List<string> DatenLesen()
