@@ -9,11 +9,10 @@ class Program
     {
        List<int> msBehind = new();
        List<int> ticksBehind = new();
-       Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers💀 aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
+       Console.WriteLine("Dieses Programm wertet die log Datei eines Minecraft Servers aus und, \nspeichert die Dauer der Verzögerungen in einer neuen Datei ab.");
        Console.WriteLine("----------------------------------------------------------------------------------------");
        (msBehind, ticksBehind) = VerzögerungenAuslesen(DatenLesen());
-       Console.WriteLine($"{msBehind[0]}" +" "+ $"{ticksBehind[0]}"); //temp
-       int[] tempParameter = KeineAhnungDigga(msBehind, ticksBehind);
+       int[] tempParameter = VerzögerungenVerarbeiten(msBehind, ticksBehind);
        DatenSpeichern(tempParameter);
        Console.ReadKey();
     }
@@ -47,8 +46,32 @@ class Program
             outputPath = desktopPath;
         }
 
+        if (File.Exists(outputPath))
+        {
+            int input2;
+            Console.WriteLine("Die Datei existiert bereits.\nSoll die Datei ersetzt werden oder eine Kopie erstelt werden?\nKopie [1]\nErsetzen [2]");
+            while (true)
+            {
+                input2 = Convert.ToInt32(Console.ReadLine());
 
-        using (StreamWriter sw = new StreamWriter(outputPath)) // geht 
+                if (input2 == 1 || input2 == 2)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Falsche Eingabe.....\nKopie [1]\nErsetzen [2]");
+                }
+            }
+
+            if (input2 == 1)
+            {
+                outputPath = Path.Combine(outputPath, "(1)"); //anders machen
+            }
+        }
+		
+
+        using (StreamWriter sw = new StreamWriter(outputPath))
         {
 
 
@@ -108,7 +131,7 @@ class Program
         }
     }
 
-    public static (List<int>, List<int>) VerzögerungenAuslesen(List<string> logs) //Done
+    public static (List<int>, List<int>) VerzögerungenAuslesen(List<string> logs)
     {
         int msTimeWoMs = 0;
         string msTimeWMs = "";
@@ -138,7 +161,7 @@ class Program
         return (serveroverloadTimeInMs, serveroverloadTimeTicks);
     }
 
-    public static int[] KeineAhnungDigga(List<int> msBehind, List<int> ticksBehind)  //method namen ändern
+    public static int[] VerzögerungenVerarbeiten(List<int> msBehind, List<int> ticksBehind)
     {
         msBehind.Sort();
         ticksBehind.Sort();
