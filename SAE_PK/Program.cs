@@ -90,9 +90,9 @@ class Program
             logs.Add(line);
         }
 
-        if (!logs[9].Contains("INFO]:") && !logs[9].Contains("WARN]:")) 
+        if (!logs[9].Contains("INFO]") && !logs[9].Contains("WARN]")) 
         {
-            Console.WriteLine("Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N(Press any button)]: ");
+            Console.WriteLine("Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N]: ");
             if (Console.ReadLine() == "j" || Console.ReadLine() == "J")
             {
                 return logs;
@@ -116,7 +116,7 @@ class Program
         string msTimeWMs = "";
         List<int> serveroverloadTimeTicks = new();
         List<int> serveroverloadTimeInMs = new();
-        string[] splittedServeroverloadTime = new string[14]; //ms=10, tick=12
+        string[] splittedServeroverloadTime = new string[14]; //ms=12, tick=14
         List<string> serveroverloadLog = new();
         int logCounter = 0;
         while (logCounter < logs.Count)
@@ -132,10 +132,10 @@ class Program
         {
             splittedServeroverloadTime = serveroverloadLog[logCounter].Split(' ');    
             logCounter++;
-            msTimeWMs = splittedServeroverloadTime[10];
+            msTimeWMs = splittedServeroverloadTime[12];
             msTimeWoMs = int.Parse(msTimeWMs.Substring(0, msTimeWMs.Length - 2));
             serveroverloadTimeInMs.Add(msTimeWoMs);
-            serveroverloadTimeTicks.Add(int.Parse(splittedServeroverloadTime[12]));
+            serveroverloadTimeTicks.Add(int.Parse(splittedServeroverloadTime[14]));
         }
         return (serveroverloadTimeInMs, serveroverloadTimeTicks);
     }
