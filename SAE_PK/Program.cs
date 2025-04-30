@@ -90,24 +90,28 @@ class Program
             logs.Add(line);
         }
 
-        if (!logs[9].Contains("INFO]") && !logs[9].Contains("WARN]")) 
-        {
-            Console.WriteLine("Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N]: ");
-            if (Console.ReadLine() == "j" || Console.ReadLine() == "J")
+        for (int i = 0; i < logs.Count; i++) {
+            if (!logs[i].Contains("INFO]") && !logs[i].Contains("WARN]"))
             {
-                return logs;
+                Console.WriteLine(
+                    "Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N]: ");
+                if (Console.ReadLine() == "j" || Console.ReadLine() == "J")
+                {
+                    return logs;
+                }
+                else
+                {
+                    Console.WriteLine("Programm frühzeitig vom user beendet da log Datei inkorrekt war");
+                    Environment.Exit(1);
+                    return logs; 
+                }
             }
             else
             {
-                Console.WriteLine("Programm frühzeitig vom user beendet da log Datei inkorrekt war");
-                Environment.Exit(1);
-                return logs; //Otherwise method won't work
+                return logs;
             }
         }
-        else
-        {
-            return logs;
-        }
+                return logs;
     }
 
     public static (List<int>, List<int>) VerzögerungenAuslesen(List<string> logs)
