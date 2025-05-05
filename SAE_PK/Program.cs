@@ -20,9 +20,9 @@ class Program
 
     public static void DatenSpeichern(int[] everyLatency)
     {
-        string dateAndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        string dateAndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); //Speichert das aktuelle Datum in dateAndTime ab
         // everyLatency = highestTick, lowestTick, highestMs, lowestMs, tickSum, msSum, msAverage, tickAverage 
-        string desktopPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{dateAndTime} serverLatencies.txt");
+        string desktopPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{dateAndTime} serverLatencies.txt"); //Sucht den Pfad zum Desktop, kombiniert ihn mit dem Dateinamen, dem aktuellen Datum und speichert ihn in "desktopPath" ab
         int userInput;
         while (true)
         {
@@ -42,7 +42,7 @@ class Program
         {
             Console.Write("Speicherpfad der Datei: ");
             outputPath = Convert.ToString(Console.ReadLine());
-            outputPath = Path.Combine(outputPath, $"{dateAndTime} serverLatencies.txt");
+            outputPath = Path.Combine(outputPath, $"{dateAndTime} serverLatencies.txt"); //Fügt das aktuelle Datum zum Dateinamen hinzu
         }
         else
         {
@@ -50,7 +50,7 @@ class Program
         }
 		
 
-        using (StreamWriter sw = new StreamWriter(outputPath))
+        using (StreamWriter sw = new StreamWriter(outputPath)) //Erstellt die Datei mit den Ergebnissen und speichert sie alle in der Datei ab
         {
 
 
@@ -64,7 +64,7 @@ class Program
             sw.WriteLine("Durchschnittliche verzögerung in ticks: " + everyLatency[7]);
         }
 
-        if (File.Exists(outputPath))
+        if (File.Exists(outputPath)) //Prüft ob die Datei erfolgreich erstellt wurde
         {
             Console.WriteLine("Die Datei wurde erfolgreich erstellt.");
         }
@@ -80,7 +80,7 @@ class Program
         string filePath = Console.ReadLine();
         if (!File.Exists(filePath))
         {
-            throw new FileNotFoundException($"Die Datei '{filePath}' wurde nicht gefunden");
+            throw new FileNotFoundException($"Die Datei '{filePath}' wurde nicht gefunden"); //Wirft den Fehlercode "FileNotFoundException" wenn die Datei nicht existiert
         }
         List<string> logs = new();
         using StreamReader sr = new(filePath);
@@ -91,7 +91,7 @@ class Program
         }
 
         for (int i = 0; i < logs.Count; i++) {
-            if (!logs[i].Contains("INFO]") && !logs[i].Contains("WARN]"))
+            if (!logs[i].Contains("INFO]") && !logs[i].Contains("WARN]")) 
             {
                 Console.WriteLine(
                     "Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N]: ");
@@ -102,7 +102,7 @@ class Program
                 else
                 {
                     Console.WriteLine("Programm frühzeitig vom user beendet da log Datei inkorrekt war");
-                    Environment.Exit(1);
+                    Environment.Exit(1); //Beendet das Programm mit dem Fehlercode 1
                     return logs; 
                 }
             }
