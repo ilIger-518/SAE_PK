@@ -91,7 +91,7 @@ class Program
         }
 
         for (int i = 0; i < logs.Count; i++) {
-            if (!logs[i].Contains("INFO]") && !logs[i].Contains("WARN]")) 
+            if (!logs[i].Contains("INFO]") && !logs[i].Contains("WARN]")) //Prüft ob es sich um eine Minecraft Log Datei handelt anhand von bestimmten Merkmalen
             {
                 Console.WriteLine(
                     "Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N]: ");
@@ -123,7 +123,7 @@ class Program
         string[] splittedServeroverloadTime = new string[14]; //ms=12, tick=14
         List<string> serveroverloadLog = new();
         int logCounter = 0;
-        while (logCounter < logs.Count)
+        while (logCounter < logs.Count) //Relevanten Zeilen ausfiltern
         {
             if (logs[logCounter].Contains("Is the server overloaded?"))
             {
@@ -132,7 +132,7 @@ class Program
             logCounter++;
         }
         logCounter = 0;
-        while (logCounter < serveroverloadLog.Count)
+        while (logCounter < serveroverloadLog.Count) //Verzögerungen aus Log Zeile rausfiltern
         {
             splittedServeroverloadTime = serveroverloadLog[logCounter].Split(' ');    
             logCounter++;
