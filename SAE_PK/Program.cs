@@ -91,7 +91,7 @@ class Program
         }
 
         for (int i = 0; i < logs.Count; i++) {
-            if (!logs[i].Contains("INFO]") && !logs[i].Contains("WARN]")) //Prüft ob es sich um eine Minecraft Log Datei handelt anhand von bestimmten Merkmalen
+            if (!logs[i].Contains("INFO]") && !logs[i].Contains("WARN]") && !logs[i].Contains("[Server thread/")) //Prüft ob es sich um eine Minecraft Log Datei handelt anhand von bestimmten Merkmalen
             {
                 Console.WriteLine(
                     "Die von dir angegebene Datei scheint nicht die korrekte log Datei zu sein.\nBitte überprüfe die Datei nochmal oder fahre trotzdem fort.\nFortfahren? [J]/[N]: ");
